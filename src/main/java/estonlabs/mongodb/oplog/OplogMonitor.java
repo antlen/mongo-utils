@@ -51,7 +51,7 @@ public class OplogMonitor {
 	private final MongoClient mongoClient;
 	private final ListenerCollection listeners = new ListenerCollection();
 	
-	private DBMonitor monitor = new DBMonitor();
+	private OplogTail tail = new OplogTail();
 	
 	public OplogMonitor(MongoClient cl){
 		mongoClient = cl;
@@ -63,15 +63,15 @@ public class OplogMonitor {
 	public synchronized void start(){
 		if(isRunning()) throw new IllegalStateException("OplogMonitor is already running.");
 	  
-		monitor.start();
+		tail.start();
 	}
 	
 	public synchronized void stop(){
-		monitor.stop();
+		tail.stop();
 	}
 	
 	public boolean isRunning(){
-		return monitor.isActive.get();
+		return tail.isActive.get();
 	}
 	
 	/**
@@ -106,7 +106,7 @@ public class OplogMonitor {
 		return listeners.remove(l);
 	}
 	
-	private class DBMonitor implements Runnable{
+	private class OplogTail implements Runnable{
 
 		protected final AtomicBoolean isActive = new AtomicBoolean(false);
 		private Thread runner;
@@ -175,7 +175,7 @@ public class OplogMonitor {
 			
 		    //find all records after the last timestamp.
 			final FindIterable<Document>  resultset = find(oplog, lastEntryTime).noCursorTimeout(true);
-			resultset.cursorType(CursorType.Tailable); // make sur ethe iterator is tailable.
+			resultset.cursorType(CursorType.Tailable); // make sure the iterator is tailable.
 			
 			return  resultset.iterator();
 		}
