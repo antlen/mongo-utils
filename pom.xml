@@ -1,30 +1,51 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>org.estonlabs</groupId>
+	<artifactId>mongo-utils</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-  <groupId>estonlabss</groupId>
-  <artifactId>mongo-utils</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
-
-  <name>mongo-utils</name>
-  <url>http://maven.apache.org</url>
+  	<name>${project.groupId}:${project.artifactId}</name>
+	<description>Mongo java utilities. Currently includes a wrapper around the oplog monitor for notification subscription.</description>
+	<url>https://github.com/antlen/mongo-utils</url>
+  	<inceptionYear>2016</inceptionYear>
+  	
+  	<licenses>
+	  	<license>
+	    	<name>MIT License</name>
+	    	<url>http://www.opensource.org/licenses/mit-license.php</url>
+	  	</license>
+	</licenses>
+	
+	<developers>
+		<developer>
+		  <name>Anthony Lenaghan</name>
+		  <email>anthony.lenaghan@yahoo.co.uk</email>
+		  <organization>EstonLabs</organization>
+		  <organizationUrl>https://github.com/antlen/mongo-utils</organizationUrl>
+		</developer>
+	</developers>
+ 
+	<scm>
+		<connection>scm:git:git@github.com:antlen/mongo-utils.git</connection>
+		<developerConnection>scm:git:git@github.com:antlen/mongo-utils.git</developerConnection>
+		<url>https://github.com/antlen/mongo-utils</url>
+	</scm>
 
 	<properties>
 		<org.springframework.version>3.2.3.RELEASE</org.springframework.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
-
+	
   <dependencies>
-  
- 
     <dependency>
         <groupId>org.mongodb</groupId>
         <artifactId>mongodb-driver</artifactId>
         <version>3.2.2</version>
     </dependency>
-
 	<dependency>
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-api</artifactId>
@@ -41,7 +62,6 @@
 		<artifactId>logback-classic</artifactId>
 		<version>1.0.7</version>
 	</dependency>
-  
   </dependencies>
 	
 	<build>
@@ -52,7 +72,6 @@
 			  <configuration>
 			  </configuration>
 			</plugin>
-
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -75,6 +94,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 </project>
