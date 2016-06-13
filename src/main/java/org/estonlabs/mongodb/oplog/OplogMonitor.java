@@ -1,4 +1,4 @@
-package estonlabs.mongodb.oplog;
+package org.estonlabs.mongodb.oplog;
 
 import java.util.*;
 import java.util.concurrent.*;
