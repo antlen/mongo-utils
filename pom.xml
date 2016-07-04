@@ -3,7 +3,7 @@
 	
 	<groupId>org.estonlabs</groupId>
 	<artifactId>mongo-utils</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
   	<name>${project.groupId}:${project.artifactId}</name>
@@ -31,6 +31,7 @@
 		<connection>scm:git:git@github.com:antlen/mongo-utils.git</connection>
 		<developerConnection>scm:git:git@github.com:antlen/mongo-utils.git</developerConnection>
 		<url>https://github.com/antlen/mongo-utils</url>
+    <tag>HEAD</tag>
   </scm>
 
 	<properties>
@@ -101,6 +102,17 @@
 		        <autoReleaseAfterClose>true</autoReleaseAfterClose>
 		      </configuration>
 		    </plugin>
+			<plugin>
+			  <groupId>org.sonatype.plugins</groupId>
+				  <artifactId>nexus-staging-maven-plugin</artifactId>
+				  <version>1.6.3</version>
+				  <extensions>true</extensions>
+				  <configuration>
+				     <serverId>ossrh</serverId>
+				     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+				     <autoReleaseAfterClose>true</autoReleaseAfterClose>
+				  </configuration>
+			</plugin>
 		    <plugin>
 		      <groupId>org.apache.maven.plugins</groupId>
 		      <artifactId>maven-source-plugin</artifactId>
