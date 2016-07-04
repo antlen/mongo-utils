@@ -37,8 +37,26 @@ import com.mongodb.client.model.Filters;
  * 
  * 
  * 
- * Monitors the oplog of the mongo client and will call back on the listens when events are detected.
+ *   Monitors the oplog of the mongo client and will call back on the listens when events are detected.
  * 
+ *  <pre>
+ *  {@code
+ *		final MongoClient mongoClient = new MongoClient("localhost" , 3001 );
+ *		
+ *      final OplogMonitor mongo = new OplogMonitor(mongoClient);
+ *		
+ *		mongo.start();
+ *
+ * 		final Namespace namespace = new Namespace( "meteor", "markets" );		
+ *
+ *		//only listen to the insert and delete events.  
+ *		mongo.listenToNameSpace(namespace, this, OplogEventType.INSERT, OplogEventType.DELETE);
+ * 
+ * 
+ * 	    //when finished monitoring call
+ *      mongo.stop();	
+ *  }
+ *  </pre>
  * @author antlen
  *
  */
@@ -57,15 +75,21 @@ public class OplogMonitor {
 		mongoClient = cl;
 	}
 	
+
 	/**
-	 * starts listening to the oplog on a separateThread
+	 * Starts listening to the oplog on a separate thread.  
+	 *
+	 * @throws IllegalStateException - if the monitor is already running.
 	 */
-	public synchronized void start(){
+	public synchronized void start() throws IllegalStateException{
 		if(isRunning()) throw new IllegalStateException("OplogMonitor is already running.");
 	  
 		tail.start();
 	}
 	
+	/**
+	 * Stops monitoring.  
+	 */
 	public synchronized void stop(){
 		tail.stop();
 	}
@@ -80,7 +104,7 @@ public class OplogMonitor {
 	 * @param ns
 	 * @param listener
 	 */
-	public void listenToNameSpace(String ns, OplogListener listener){
+	public void listenToNameSpace(Namespace ns, OplogListener listener){
 		listenToNameSpace(ns, listener, OplogEventType.values());
 	}
 	
@@ -92,8 +116,8 @@ public class OplogMonitor {
 	 * @param listener
 	 * @param types
 	 */
-	public void listenToNameSpace(String ns, OplogListener listener, OplogEventType ... types){		
-		listeners.addListener(listener, ns, types);
+	public void listenToNameSpace(Namespace ns, OplogListener listener, OplogEventType ... types){		
+		listeners.addListener(listener, ns.getKey(), types);
 	}
 	
 	/**
